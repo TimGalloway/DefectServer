@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace DefectServer.Models
@@ -19,6 +20,17 @@ namespace DefectServer.Models
         {
         }
 
-        public System.Data.Entity.DbSet<DefectServer.Models.Defect> Defects { get; set; }
+        public DbSet<Defect> Defects { get; set; }
+
+        public override Task<int> SaveChangesAsync()
+        {
+            DateTime saveTime = DateTime.UtcNow;
+            foreach (var entry in this.ChangeTracker.Entries().Where(e => e.State == EntityState.Added))
+            {
+                if (entry.Property("DateCreated").CurrentValue == null)
+                    entry.Property("DateCreated").CurrentValue = saveTime;
+            }
+            return base.SaveChangesAsync();
+        }
     }
 }

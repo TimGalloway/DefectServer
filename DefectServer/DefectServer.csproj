@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -198,7 +199,12 @@
     <Compile Include="Migrations\201708151418513_AddImageInfo.Designer.cs">
       <DependentUpon>201708151418513_AddImageInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708211333103_AddDateCreated.cs" />
+    <Compile Include="Migrations\201708211333103_AddDateCreated.Designer.cs">
+      <DependentUpon>201708211333103_AddDateCreated.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Defect.cs" />
     <Compile Include="Models\DefectServerContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -291,6 +297,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708151418513_AddImageInfo.resx">
       <DependentUpon>201708151418513_AddImageInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708211333103_AddDateCreated.resx">
+      <DependentUpon>201708211333103_AddDateCreated.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

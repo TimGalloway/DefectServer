@@ -5,7 +5,7 @@ using System.Web;
 
 namespace DefectServer.Models
 {
-    public class Defect
+    public class Defect : BaseModel
     {
         public Int32 Id { get; set; }
         public String Location { get; set; }

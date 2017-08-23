@@ -2,116 +2,122 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
+using System.Web;
+using System.Web.Mvc;
 using DefectServer.Models;
-using System.IO;
-using System.Drawing;
-using System.Web.Hosting;
 
 namespace DefectServer.Controllers
 {
-    public class DefectsController : ApiController
+    public class DefectsController : Controller
     {
         private DefectServerContext db = new DefectServerContext();
 
-        // GET: api/Defects
-        public IQueryable<Defect> GetDefects()
+        // GET: Defects
+        public ActionResult Index()
         {
-            return db.Defects;
+            var defects = db.Defects.Include(d => d.Job);
+            return View(defects.ToList());
         }
 
-        // GET: api/Defects/5
-        [ResponseType(typeof(Defect))]
-        public async Task<IHttpActionResult> GetDefect(int id)
+        // GET: Defects/Details/5
+        public ActionResult Details(int? id)
         {
-            Defect defect = await db.Defects.FindAsync(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Defect defect = db.Defects.Find(id);
             if (defect == null)
             {
-                return NotFound();
+                return HttpNotFound();
             }
-
-            return Ok(defect);
+            return View(defect);
         }
 
-        // PUT: api/Defects/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutDefect(int id, Defect defect)
+        // GET: Defects/Create
+        public ActionResult Create()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != defect.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(defect).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DefectExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            ViewBag.JobId = new SelectList(db.Jobs, "Id", "Description");
+            return View();
         }
 
-        // POST: api/Defects
-        [ResponseType(typeof(Defect))]
-        public async Task<IHttpActionResult> PostDefect(Defect defect)
+        // POST: Defects/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Id,Location,Description,ImageName,ImageBase64,JobId,DateCreated,DateModified")] Defect defect)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                db.Defects.Add(defect);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
 
-            using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(defect.ImageBase64)))
-            {
-                using (Bitmap bm2 = new Bitmap(ms))
-                {
-                    string filePath = HostingEnvironment.MapPath("~/Images/");
-                    bm2.Save(@filePath + defect.ImageName);
-                }
-            }
-
-            db.Defects.Add(defect);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = defect.Id }, defect);
+            ViewBag.JobId = new SelectList(db.Jobs, "Id", "Description", defect.JobId);
+            return View(defect);
         }
 
-        // DELETE: api/Defects/5
-        [ResponseType(typeof(Defect))]
-        public async Task<IHttpActionResult> DeleteDefect(int id)
+        // GET: Defects/Edit/5
+        public ActionResult Edit(int? id)
         {
-            Defect defect = await db.Defects.FindAsync(id);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Defect defect = db.Defects.Find(id);
             if (defect == null)
             {
-                return NotFound();
+                return HttpNotFound();
             }
+            ViewBag.JobId = new SelectList(db.Jobs, "Id", "Description", defect.JobId);
+            return View(defect);
+        }
 
+        // POST: Defects/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,Location,Description,ImageName,ImageBase64,JobId,DateCreated,DateModified")] Defect defect)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(defect).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.JobId = new SelectList(db.Jobs, "Id", "Description", defect.JobId);
+            return View(defect);
+        }
+
+        // GET: Defects/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Defect defect = db.Defects.Find(id);
+            if (defect == null)
+            {
+                return HttpNotFound();
+            }
+            return View(defect);
+        }
+
+        // POST: Defects/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Defect defect = db.Defects.Find(id);
             db.Defects.Remove(defect);
-            await db.SaveChangesAsync();
-
-            return Ok(defect);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
@@ -121,11 +127,6 @@ namespace DefectServer.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool DefectExists(int id)
-        {
-            return db.Defects.Count(e => e.Id == id) > 0;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace DefectServer.Controllers
 
         public ActionResult List()
         {
-            var Model = db.Defects.ToList();
+            var Model = db.Jobs.ToList();
             return View(Model);
         }
 
@@ -36,6 +36,28 @@ namespace DefectServer.Controllers
                 .FirstOrDefault();
 
             return View(DefectModel);
+        }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(Job job)
+        {
+            try
+            {
+                db.Jobs.Add(job);
+                db.SaveChanges();
+
+                return RedirectToAction("List");
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

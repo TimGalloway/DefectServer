@@ -21,6 +21,7 @@ namespace DefectServer.Models
         }
 
         public DbSet<Defect> Defects { get; set; }
+        public DbSet<Job> Jobs { get; set; }
 
         public override Task<int> SaveChangesAsync()
         {

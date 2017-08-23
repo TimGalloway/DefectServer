@@ -12,5 +12,8 @@ namespace DefectServer.Models
         public String Description { get; set; }
         public String ImageName { get; set; }
         public String ImageBase64 { get; set; }
+
+        public int JobId { get; set; }
+        public virtual Job Job { get; set; }
     }
 }

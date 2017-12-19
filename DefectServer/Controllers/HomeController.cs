@@ -22,42 +22,5 @@ namespace DefectServer.Controllers
 
             return View();
         }
-
-        public ActionResult List()
-        {
-            var Model = db.Jobs.ToList();
-            return View(Model);
-        }
-
-        public ActionResult Details(int id)
-        {
-            Defect DefectModel = db.Defects
-                .Where(d => d.Id == id)
-                .FirstOrDefault();
-
-            return View(DefectModel);
-        }
-
-        [HttpGet]
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Create(Job job)
-        {
-            try
-            {
-                db.Jobs.Add(job);
-                db.SaveChanges();
-
-                return RedirectToAction("List");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

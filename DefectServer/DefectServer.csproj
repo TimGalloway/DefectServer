@@ -188,6 +188,8 @@
     <Compile Include="Controllers\api\DefectsController.cs" />
     <Compile Include="Controllers\DefectsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JobsController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -208,13 +210,35 @@
     <Compile Include="Migrations\201708230617312_AddJobModel.Designer.cs">
       <DependentUpon>201708230617312_AddJobModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712180512362_CreateUsers.cs" />
+    <Compile Include="Migrations\201712180512362_CreateUsers.Designer.cs">
+      <DependentUpon>201712180512362_CreateUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712180534336_AddTitleToJob.cs" />
+    <Compile Include="Migrations\201712180534336_AddTitleToJob.Designer.cs">
+      <DependentUpon>201712180534336_AddTitleToJob.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712181246267_AddReferenceToJobs.cs" />
+    <Compile Include="Migrations\201712181246267_AddReferenceToJobs.Designer.cs">
+      <DependentUpon>201712181246267_AddReferenceToJobs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712190628142_ChangeUserIDInJob.cs" />
+    <Compile Include="Migrations\201712190628142_ChangeUserIDInJob.Designer.cs">
+      <DependentUpon>201712190628142_ChangeUserIDInJob.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712190635572_ChangeUserIDInJob2.cs" />
+    <Compile Include="Migrations\201712190635572_ChangeUserIDInJob2.Designer.cs">
+      <DependentUpon>201712190635572_ChangeUserIDInJob2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Defect.cs" />
     <Compile Include="Models\DefectServerContext.cs" />
     <Compile Include="Models\Job.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoutingExtensions.cs" />
+    <Compile Include="ViewModel\JobViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -289,14 +313,22 @@
     <Content Include="Web - Copy.Release.config">
       <DependentUpon>Web - Copy.config</DependentUpon>
     </Content>
-    <Content Include="Views\Home\List.cshtml" />
-    <Content Include="Views\Home\Details.cshtml" />
-    <Content Include="Views\Home\Create.cshtml" />
     <Content Include="Views\Defects\Create.cshtml" />
     <Content Include="Views\Defects\Delete.cshtml" />
     <Content Include="Views\Defects\Details.cshtml" />
     <Content Include="Views\Defects\Edit.cshtml" />
     <Content Include="Views\Defects\Index.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Jobs\Create.cshtml" />
+    <Content Include="Views\Jobs\Delete.cshtml" />
+    <Content Include="Views\Jobs\Details.cshtml" />
+    <Content Include="Views\Jobs\Edit.cshtml" />
+    <Content Include="Views\Jobs\Index.cshtml" />
+    <Content Include="Views\Defects\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -317,6 +349,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708230617312_AddJobModel.resx">
       <DependentUpon>201708230617312_AddJobModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712180512362_CreateUsers.resx">
+      <DependentUpon>201712180512362_CreateUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712180534336_AddTitleToJob.resx">
+      <DependentUpon>201712180534336_AddTitleToJob.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712181246267_AddReferenceToJobs.resx">
+      <DependentUpon>201712181246267_AddReferenceToJobs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712190628142_ChangeUserIDInJob.resx">
+      <DependentUpon>201712190628142_ChangeUserIDInJob.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712190635572_ChangeUserIDInJob2.resx">
+      <DependentUpon>201712190635572_ChangeUserIDInJob2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -1,125 +1,116 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using DefectServer.Models;
 
 namespace DefectServer.Controllers
 {
-    public class DefectsController : Controller
+    public class UsersController : Controller
     {
         private DefectServerContext db = new DefectServerContext();
 
-        // GET: Defects
+        // GET: Users
         public ActionResult Index()
         {
-            var defects = db.Defects.Include(d => d.Job);
-            return View(defects.ToList());
+            return View(db.Users.ToList());
         }
 
-        public ActionResult List(int JobId)
-        {
-            var defects = db.Defects.Where(d => d.JobId.Equals(JobId));
-            ViewBag.JobId = JobId;
-            return View(defects);
-        }
-
-        // GET: Defects/Details/5
+        // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Defect defect = db.Defects.Find(id);
-            if (defect == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(defect);
+            return View(user);
         }
 
-        // GET: Defects/Create
+        // GET: Users/Create
         public ActionResult Create()
         {
-            ViewBag.JobId = new SelectList(db.Jobs, "Id", "Description");
             return View();
         }
 
-        // POST: Defects/Create
+        // POST: Users/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Location,Description,ImageName,ImageBase64,JobId,DateCreated,DateModified")] Defect defect)
+        public ActionResult Create([Bind(Include = "Id,FirstName,SurName,Email,DateCreated,DateModified")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Defects.Add(defect);
+                db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.JobId = new SelectList(db.Jobs, "Id", "Description", defect.JobId);
-            return View(defect);
+            return View(user);
         }
 
-        // GET: Defects/Edit/5
+        // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Defect defect = db.Defects.Find(id);
-            if (defect == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.JobId = new SelectList(db.Jobs, "Id", "Description", defect.JobId);
-            return View(defect);
+            return View(user);
         }
 
-        // POST: Defects/Edit/5
+        // POST: Users/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Location,Description,ImageName,ImageBase64,JobId,DateCreated,DateModified")] Defect defect)
+        public ActionResult Edit([Bind(Include = "Id,FirstName,SurName,Email,DateCreated,DateModified")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(defect).State = EntityState.Modified;
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.JobId = new SelectList(db.Jobs, "Id", "Description", defect.JobId);
-            return View(defect);
+            return View(user);
         }
 
-        // GET: Defects/Delete/5
+        // GET: Users/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Defect defect = db.Defects.Find(id);
-            if (defect == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(defect);
+            return View(user);
         }
 
-        // POST: Defects/Delete/5
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Defect defect = db.Defects.Find(id);
-            db.Defects.Remove(defect);
+            User user = db.Users.Find(id);
+            db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

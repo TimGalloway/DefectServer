@@ -46,10 +46,11 @@ namespace DefectServer.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,SurName,Email,DateCreated,DateModified")] User user)
+        public ActionResult Create(User user)
         {
             if (ModelState.IsValid)
             {
+                user.DisplayName = user.SurName + ", " + user.FirstName;
                 db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -78,10 +79,11 @@ namespace DefectServer.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,SurName,Email,DateCreated,DateModified")] User user)
+        public ActionResult Edit(User user)
         {
             if (ModelState.IsValid)
             {
+                user.DisplayName = user.SurName + ", " + user.FirstName;
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

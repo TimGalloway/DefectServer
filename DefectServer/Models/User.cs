@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +12,7 @@ namespace DefectServer.Models
         public String FirstName { get; set; }
         public String SurName { get; set; }
         public String Email { get; set; }
+        public String DisplayName { get; set; }
 
         public ICollection<Job> Jobs { get; set; }
     }

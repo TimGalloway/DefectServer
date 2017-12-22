@@ -18,7 +18,7 @@ namespace DefectServer.Controllers
         public SelectList GetUsers()
         {
             List<SelectListItem> users = db.Users.OrderBy(n => n.SurName)
-                .Select(n => new SelectListItem { Value = n.Id.ToString(), Text = String.Concat(n.SurName.ToString(), ", ", n.FirstName.ToString() )}).ToList();
+                .Select(n => new SelectListItem { Value = n.Id.ToString(), Text = n.DisplayName.ToString() }).ToList();
             //var userstip = new SelectListItem() { Value = null, Text = "--- select user ---" }; users.Insert(0, userstip);
             return new SelectList(users, "Value", "Text");
         }
@@ -36,7 +36,10 @@ namespace DefectServer.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Job job = db.Jobs.Find(id);
+            Job job = db.Jobs
+                .Include(j => j.JobUser)
+                .SingleOrDefault(a => a.Id == id);
+
             if (job == null)
             {
                 return HttpNotFound();

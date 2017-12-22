@@ -186,6 +186,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\api\DefectsController.cs" />
+    <Compile Include="Controllers\api\JobsController.cs" />
+    <Compile Include="Controllers\api\UsersController.cs" />
     <Compile Include="Controllers\DefectsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobsController.cs" />
@@ -229,6 +231,10 @@
     <Compile Include="Migrations\201712190635572_ChangeUserIDInJob2.cs" />
     <Compile Include="Migrations\201712190635572_ChangeUserIDInJob2.Designer.cs">
       <DependentUpon>201712190635572_ChangeUserIDInJob2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712200519124_AddDisplayNameToUsers.cs" />
+    <Compile Include="Migrations\201712200519124_AddDisplayNameToUsers.Designer.cs">
+      <DependentUpon>201712200519124_AddDisplayNameToUsers.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseModel.cs" />
@@ -298,6 +304,7 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\Site.css" />
@@ -364,6 +371,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712190635572_ChangeUserIDInJob2.resx">
       <DependentUpon>201712190635572_ChangeUserIDInJob2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712200519124_AddDisplayNameToUsers.resx">
+      <DependentUpon>201712200519124_AddDisplayNameToUsers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

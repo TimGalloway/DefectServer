@@ -50,22 +50,6 @@
             @Html.DisplayFor(model => model.JobUser.SurName)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateModified)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateModified)
-        </dd>
-
     </dl>
     @Html.ActionLink("Defects","List", "Defects", new { JobID = Model.Id}, null)
 </div>
